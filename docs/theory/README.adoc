@@ -1,0 +1,72 @@
+= Podstawy teoretyczne
+
+== Czym jest Infrastructure as Code
+Infrastructure as Code (IaC) to podejście do zarządzania infrastrukturą informatyczną, w którym infrastruktura jest definiowana, konfigurowana i zarządzana za pomocą kodu, zamiast tradycyjnych, ręcznych procesów konfiguracyjnych. Głównym celem IaC jest automatyzacja procesów związanych z wdrażaniem i zarządzaniem infrastrukturą, co przynosi szereg korzyści, takich jak zwiększona elastyczność, skalowalność, powtarzalność oraz zminimalizowane ryzyko ludzkiego błędu.
+
+Kluczowe elementy Infrastructure as Code to:
+
+. Deklaratywność: W odróżnieniu od imperatywnego podejścia, w IaC definiuje się zamierzenia dotyczące infrastruktury, a nie kroki, które należy podjąć, aby osiągnąć pożądany stan. Oznacza to, że opisuje się, co chcemy osiągnąć, a nie jak to zrobić.
+. Kod źródłowy: Infrastruktura jest reprezentowana za pomocą kodu, najczęściej w formie plików tekstowych. Ten kod jest przechowywany w systemie kontroli wersji, co umożliwia śledzenie zmian, wersjonowanie oraz współpracę między zespołami.
+. Automatyzacja: Za pomocą IaC można automatyzować procesy wdrażania i zarządzania infrastrukturą, co eliminuje potrzebę ręcznego wprowadzania zmian. Automatyzacja zwiększa skuteczność, redukuje błędy i przyspiesza cykl życia infrastruktury.
+. Idempotencja: Procesy wdrażania za pomocą IaC są idempotentne, co oznacza, że można je wielokrotnie stosować, a wynik będzie zawsze taki sam, niezależnie od ilości wywołań.
+. Wsparcie dla różnych środowisk: Dzięki IaC można jednocześnie zarządzać infrastrukturą w różnych środowiskach, takich jak testowe, deweloperskie, stagingowe czy produkcyjne.
+
+Popularnymi narzędziami do implementacji IaC są Terraform, Ansible, Chef i Puppet. Dzięki nim organizacje mogą efektywnie zarządzać swoją infrastrukturą, zwłaszcza w kontekście chmur obliczeniowych, gdzie wymagana jest elastyczność i dynamiczne dostosowywanie zasobów do potrzeb biznesowych.
+
+== Korzyści
+
+* Automatyzacja procesów: IaC umożliwia automatyzację procesów wdrożeniowych i zarządzania infrastrukturą, co przyspiesza cykle dostarczania oprogramowania.
+* Powtarzalność: Dzięki IaC można powtarzać te same operacje wdrożeniowe wielokrotnie, co eliminuje błędy wynikające z ręcznych interwencji i zapewnia spójność infrastruktury.
+* Skalowalność: IaC ułatwia skalowanie infrastruktury w zależności od potrzeb biznesowych, umożliwiając elastyczne dostosowywanie zasobów do wymagań obciążeniowych.
+* Szybkie odtworzenie środowiska: Zastosowanie IaC ułatwia szybkie odtworzenie i zrekonstruowanie środowiska produkcyjnego, co jest istotne w przypadku awarii lub potrzeby migracji.
+* Łatwe zarządzanie zmianami: IaC ułatwia śledzenie i zarządzanie zmianami w infrastrukturze, dzięki czemu zespoły mogą skutecznie wprowadzać aktualizacje i poprawki.
+* Zwiększenie efektywności: Automatyzacja za pomocą IaC redukuje nakłady czasowe i ludzkie błędy, co przekłada się na zwiększenie efektywności operacyjnej.
+* Współpraca zespołów: Kod IaC jest przechowywany w systemie kontroli wersji, co ułatwia współpracę między zespołami, a także umożliwia łatwe monitorowanie i zarządzanie historią zmian.
+* Zgodność z przepisami: Stosowanie IaC ułatwia utrzymanie zgodności z przepisami i standardami bezpieczeństwa poprzez precyzyjne definiowanie konfiguracji infrastruktury.
+* Łatwość wdrażania w chmurze: Narzędzia IaC są często zoptymalizowane do współpracy z chmurami obliczeniowymi, umożliwiając łatwe zarządzanie infrastrukturą w różnych środowiskach chmurowych.
+
+== Kim jest DevOps Engineer
+
+DevOps Engineer — osoba, która jednocześnie jest programistą i administratorem. Działa na przecięciu tych funkcji.
+
+DevOps zajmuje się tworzeniem pipelinów CI/CD, monitoringiem aplikacji i infrastruktury, tworzeniem i przygotowywaniem infrastruktury, automatyzacją procesów.
+
+== Narzędzia do IaC
+
+. Typ narzędzia:
+.. Terraform: Narzędzie typu Infrastructure as Code (IaC), zaprojektowane do zarządzania infrastrukturą w sposób deklaratywny i niezależny od dostawcy.
+.. Chef, Puppet, Ansible: Narzędzia konfiguracji zarządzania systemem, skupione na automatyzacji konfiguracji oprogramowania na maszynach.
+.. AWS CloudFormation: Usługa chmurowa do zarządzania zasobami w chmurze AWS.
+
+. Język konfiguracji:
+.. Terraform: Korzysta z własnego języka konfiguracji HCL (HashiCorp Configuration Language).
+.. Chef: Wykorzystuje język Ruby.
+.. Puppet: Posługuje się własnym językiem Puppet DSL (Domain Specific Language).
+.. Ansible: Korzysta z języka YAML.
+.. AWS CloudFormation: Posługuje się językami JSON i YAML.
+
+. Architektura:
+.. Terraform: Jest narzędziem agentless, co oznacza brak stałego agenta na zarządzanych maszynach.
+.. Chef, Puppet: Wykorzystują architekturę agent-server, gdzie agenty są zainstalowane na zarządzanych maszynach.
+.. Ansible: Jest agentless, co oznacza brak potrzeby stałego agenta na zarządzanych maszynach.
+.. AWS CloudFormation: Jest usługą chmurową, co oznacza, że nie ma potrzeby instalacji agentów na maszynach.
+
+. Przenośność i wieloplatformowość:
+.. Terraform: Jest niezależne od dostawcy, co oznacza, że może zarządzać zasobami na różnych platformach.
+.. Chef, Puppet, Ansible: Są wieloplatformowe, ale wymagają odpowiednich modułów do obsługi różnych systemów operacyjnych.
+.. AWS CloudFormation: Jest specyficzne dla chmury AWS.
+
+. Zastosowanie:
+.. Terraform: Idealny dla organizacji, które chcą zarządzać infrastrukturą jako kodem na różnych platformach, w tym na chmurze i lokalnie.
+.. Chef, Puppet, Ansible: Skoncentrowane na konfiguracji systemów, są używane do automatyzacji zarządzania konfiguracją i instalacją oprogramowania.
+.. AWS CloudFormation: Optymalne dla organizacji korzystających z chmury AWS, które chcą wdrażać i zarządzać zasobami na tym konkretnym środowisku.
+
+Ostateczny wybór narzędzia zależy od konkretnych potrzeb organizacji, preferencji zespołu oraz wymagań związanych z zarządzaniem infrastrukturą i wdrażaniem aplikacji. W niektórych przypadkach organizacje decydują się na kombinację różnych narzędzi w zależności od konkretnej roli, jaką pełnią w ich środowisku.
+
+.https://medium.com/cloudnativeinfra/when-to-use-which-infrastructure-as-code-tool-665af289fbde
+image::tools_matrix.png[]
+
+== Ekosystem narzędzi DevOps
+
+.https://www.harness.io/blog/continuous-delivery-tools
+image::tools_ecosystem.jpg[]

@@ -1,0 +1,75 @@
+= Szkolenie Terraform — Automatyzacja wdrożeń (Infrastructure as Code)
+:author: Juliusz Marciniak
+:imagesdir: ./images
+
+Intensywny kurs, który umożliwi Wam opanowanie jednego z najnowocześniejszych narzędzi w dziedzinie automatyzacji infrastruktury IT. Terraform to potężne narzędzie typu Infrastructure as Code (IaC), które pozwala na definiowanie, wdrażanie i zarządzanie infrastrukturą poprzez kod.
+
+== O trenerze
+
+Imię i nazwisko: Juliusz Marciniak
+
+Zawód: Programista, DevOps, TechLead
+
+Doświadczenie: 10 lat
+
+Technologie:
+
+* Java, Spring
+* Jenkins, GitLab, Nexus
+* Docker, Kubernetes
+
+Jestem programistą Java z 10-letnim stażem. W codziennej pracy zajmuję się tematami cloudowymi i Kubernetesowymi. Oprócz tego doglądam architektury aplikacji w swoich projektach. Jestem entuzjastą nowych rozwiązań i technologii. Zwracam dużą uwagę, by rzeczy wdrażane przeze mnie były przemyślane i spójne. Czasami też programuję... i rekrutuję.
+
+== Agenda
+=== Dzień 1
+. Infrastructure as Code
+.. Podejście tradycyjne
+.. Co to jest Infrastructure as Code?
+.. Zalety podejścia IaC
+.. Narzędzia IaC
+. Wprowadzenie do Terraform
+.. Co to jest Terraform?
+.. Jak działa Terraform?
+.. Etapy pracy z Terraform
+.. Elementy Terraform
+. Poznanie języka HCL
+.. Najważniejsze elementy języka HCL i ich wykorzystanie w pracy z Terraform
+. Pierwsze kroki z Terraform
+.. Instalacja Terraform
+.. Komendy Terraform
+.. Stan infrastruktury w Terraform
+.. Providerzy
+.. Data sources
+.. Ćwiczenia
+
+=== Dzień 2
+. Terraform Cloud
+.. Co to jest Terraform Cloud?
+.. Konfiguracja narzędzia
+.. Ćwiczenia
+. Przykład użycia Terraform w ramach chmury AWS
+.. Konfiguracja konta AWS
+.. Przedstawienie funkcjonalności AWS (AWS provider) dostępnej w Terraform
+.. Zarządzanie uwierzytelnieniem i autoryzacją
+.. Provisioning elementów chmury AWS za pomocą Terraform
+. Jak projektować infrastrukturę systemów w Terraform
+.. Moduły — wprowadzenie (parametry wejściowe, sposób wersjonowania oraz parametry wyjściowe)
+.. Jak zarządzać stanem optymalnie?
+.. Kwestie bezpieczeństwa
+.. Jak pracować w zespole nad projektami Terraform?
+
+
+== Zasady
+* Staramy się nie spóźniać
+* Telefon odbieramy poza salą
+* Jesteśmy aktywni
+* Jeśli utknęliśmy na problemie podczas realizacji zadań — natychmiast informujemy
+* Nie śmiejemy się z innych i nie krytykujemy pomysłów innych
+* Każdy ma prawo do wyrażania swojej opinii
+* Przerwa na kawę co 1-1,5h
+* Przerwa obiadowa o 13:00
+
+
+include::theory/README.adoc[leveloffset=1]
+
+include::terraform/README.adoc[leveloffset=1]

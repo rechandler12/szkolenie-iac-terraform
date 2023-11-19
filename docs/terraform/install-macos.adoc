@@ -1,0 +1,3 @@
+= Instalacja Terraform w systemie MacOS
+
+. Zainstaluj za pomocą tutoriala z oficjalnej strony https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli

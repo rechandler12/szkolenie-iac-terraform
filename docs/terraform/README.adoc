@@ -1,0 +1,173 @@
+= Terraform
+
+== Co to jest Terraform?
+
+Terraform to potężne narzędzie do zarządzania infrastrukturą jako kodem, które umożliwia programistom i administratorom skonfigurowanie i wdrożenie zasobów IT w sposób zautomatyzowany. Dzięki deklaratywnemu językowi konfiguracji, znacznie ułatwia tworzenie plików opisujących pożądany stan infrastruktury. Terraform jest niezależny od dostawcy, co oznacza, że można go używać zarówno w chmurze publicznej (np. AWS, Azure, Google Cloud), jak i w środowiskach lokalnych. Narzędzie to utrzymuje plik stanu, który śledzi aktualny status infrastruktury, umożliwiając efektywne wdrażanie zmian i automatyzację procesów. Dzięki możliwości paralelnego wdrażania oraz modułom, Terraform ułatwia zarządzanie infrastrukturą na dużą skalę i zapewnia elastyczność w dostosowywaniu zasobów do potrzeb organizacji. Aktywna społeczność i obszerny ekosystem dostawców sprawiają, że Terraform jest powszechnie stosowany w branży IT, przyczyniając się do efektywniejszego i spójniejszego zarządzania środowiskiem IT.
+
+== Jak działa Terraform?
+
+Terraform działa na zasadzie deklaratywnego zarządzania infrastrukturą, umożliwiając programistom i administratorom definiowanie i wdrażanie zasobów IT w sposób zautomatyzowany.
+
+== Etapy pracy z Terraform
+
+. Definicja infrastruktury jako kodu: Użytkownicy tworzą pliki konfiguracyjne w języku HCL (HashiCorp Configuration Language), opisując pożądany stan infrastruktury. W tym etapie definiuje się zasoby, takie jak maszyny wirtualne, sieci, bazy danych itp.
+
+. Inicjalizacja: Po utworzeniu plików konfiguracyjnych, użytkownicy wykonują komendę `terraform init`. Terraform pobiera odpowiedniego dostawce (provider) dla zdefiniowanych zasobów i inicjalizuje plik stanu, który będzie śledził aktualny stan infrastruktury.
+
+. Planowanie: Użytkownicy wykonują komendę `terraform plan`, która generuje plan wdrożenia. Terraform porównuje zdefiniowany kod z aktualnym stanem infrastruktury i określa, które zasoby trzeba utworzyć, zmodyfikować lub usunąć, aby osiągnąć pożądany stan.
+
+. Wdrażanie: Po zaakceptowaniu planu, użytkownicy wykonują komendę `terraform apply`. Terraform automatycznie wdraża zdefiniowane zasoby, aktualizuje plik stanu i raportuje wyniki.
+
+. Śledzenie stanu: Terraform utrzymuje plik stanu, który zawiera informacje o aktualnym stanie infrastruktury. Plik ten jest istotny, ponieważ pozwala narzędziu na identyfikację różnic między zdefiniowanym a aktualnym stanem oraz na monitorowanie wprowadzanych zmian.
+
+. Modyfikacje i utrzymanie: W miarę ewolucji infrastruktury, użytkownicy mogą modyfikować pliki konfiguracyjne, a Terraform automatycznie przewiduje i wdraża zmiany zgodnie z zaktualizowanym kodem.
+
+== Elementy Terraform
+
+* Pliki Konfiguracyjne (Configuration Files): Pliki z rozszerzeniem `.tf` zawierają kod konfiguracyjny Terraforma napisany w HashiCorp Configuration Language (HCL). W tych plikach definiuje się zasoby i ich właściwości.
+
+* Dostawcy (Providers): Dostawcy to pluginy, które pozwalają Terraformowi komunikować się z różnymi platformami chmurowymi lub lokalnymi środowiskami. Przykłady to dostawcy dla AWS, Azure, Google Cloud, Docker, itp.
+
+* Zasoby (Resources): Zasoby to elementy infrastruktury, takie jak maszyny wirtualne, sieci, bazy danych itp. W plikach konfiguracyjnych określa się, jakie zasoby chcemy utworzyć lub zarządzać.
+
+* Zmienne (Variables): Zmienne pozwalają na dynamiczne parametryzowanie plików konfiguracyjnych. Używane są do przechowywania wartości, które mogą być różne w różnych środowiskach.
+
+* Moduły (Modules): Moduły to zorganizowane struktury kodu, które mogą być wielokrotnie używane w różnych projektach. Pozwalają na ponowne użycie kodu i organizację konfiguracji.
+
+* Pliki Stanu (State Files): Pliki stanu zawierają informacje o aktualnym stanie infrastruktury, utworzonej lub zarządzanej przez Terraform. Te pliki są istotne do śledzenia, co zostało utworzone, zmienione lub usunięte.
+
+* Pliki Wyjściowe (Output Files): Pliki wyjściowe pozwalają na definiowanie wartości, które mogą być zwracane po pomyślnym wdrożeniu, co ułatwia korzystanie z wyników działania Terraforma w innych skryptach czy narzędziach.
+
+== Poznanie języka HCL
+
+Struktura języka HCL (HashiCorp Configuration Language) obejmuje kilka kluczowych elementów, które umożliwiają programistom i administratorom definiowanie konfiguracji w sposób czytelny i zrozumiały. Całość dokumentacji znajduje się https://developer.hashicorp.com/terraform/language/syntax/configuration[tutaj]. Kilka przykładów poniżej
+
+* Zmienne Blokowe (Block Variables): Zmienne blokowe są jednym z podstawowych elementów HCL. Są używane do definiowania zmiennych w kontekście konkretnego bloku. Na przykład, w Terraform, zmienne blokowe są często używane do parametryzowania konfiguracji zasobów.
+[source,hcl]
+----
+variable "instance_type" {
+    type    = string
+    default = "t2.micro"
+}
+----
+
+* Blok Konfiguracyjny (Configuration Block): Blok konfiguracyjny zawiera instrukcje dotyczące konkretnego aspektu konfiguracji. Bloki te są zagnieżdżone i strukturalne, co pozwala na hierarchiczne organizowanie kodu.
+[source,hcl]
+----
+resource "aws_instance" "example" {
+  ami           = "ami-0c55b159cbfafe1f0"
+  instance_type = var.instance_type
+}
+----
+
+* Interpolacja Zmiennych (Variable Interpolation): Interpolacja zmiennych pozwala na dynamiczne wstawianie wartości zmiennych do konkretnych miejsc w konfiguracji.
+[source,hcl]
+----
+tag = {
+  Name = "web-server-${var.environment}"
+}
+----
+
+* Typy Danych (Data Types): HCL obsługuje różne typy danych, takie jak liczby, ciągi znaków, listy, mapy itp. Pozwala to na elastyczne modelowanie różnych rodzajów danych w konfiguracji.
+[source,hcl]
+----
+variable "subnet_ids" {
+  type    = list(string)
+  default = ["subnet-12345678", "subnet-87654321"]
+}
+----
+
+* Atrybuty (Attributes): Atrybuty określają właściwości zasobów i są definiowane wewnątrz bloków konfiguracyjnych. Na przykład, atrybuty instancji AWS mogą obejmować ami, instance_type, itp.
+[source,hcl]
+----
+resource "aws_instance" "example" {
+    ami           = "ami-0c55b159cbfafe1f0"
+    instance_type = var.instance_type
+}
+----
+
+=== Zmienne
+
+[source,hcl]
+----
+# Deklaracja zmiennej "region" o typie "string" i wartości domyślnej "us-east-1"
+variable "region" {
+  type    = string
+  default = "us-east-1"
+}
+----
+
+* `variable` to słowo kluczowe do deklaracji zmiennej.
+* `"region"` to nazwa zmiennej.
+* `{ ... }` to blok definiujący właściwości zmiennej.
+* `type = string` określa, że zmienna "region" jest typu string.
+* `default = "us-east-1"` ustawia wartość domyślną zmiennej na "us-east-1".
+
+=== Wyrażenia
+
+[source,hcl]
+----
+# Przykładowe wyrażenie w HCL
+resource "aws_instance" "example" {
+  ami           = "ami-0c55b159cbfafe1f0"
+  instance_type = "t2.micro"
+
+  tags = {
+    Name        = "ExampleInstance"
+    Environment = var.environment
+  }
+}
+
+# Zmienna "environment" użyta w wyrażeniu
+variable "environment" {
+  type    = string
+  default = "development"
+}
+----
+
+* `resource` definiuje zasób instancji EC2 w AWS.
+* `ami` i `instance_type` to właściwości tego zasobu.
+* `tags` to mapa, która zawiera tagi przypisane do instancji
+** `var.environment` to dynamiczna wartość zmiennej.
+
+=== Pętle
+
+[source,hcl]
+----
+# Zmienna zawierająca mapę instancji EC2
+variable "ec2_instances" {
+  type = map(object({
+    ami           = string
+    instance_type = string
+  }))
+  default = {
+    example_instance1 = {
+      ami           = "ami-0c55b159cbfafe1f0"
+      instance_type = "t2.micro"
+    },
+    example_instance2 = {
+      ami           = "ami-0123456789abcdef0"
+      instance_type = "t2.small"
+    },
+  }
+}
+
+# Dynamiczna iteracja z użyciem for_each
+resource "aws_instance" "example" {
+  for_each = var.ec2_instances
+
+  ami           = each.value.ami
+  instance_type = each.value.instance_type
+
+  tags = {
+    Name = each.key
+  }
+}
+----
+
+* `variable "ec2_instances"` zawiera mapę instancji EC2, gdzie klucz to unikalna nazwa instancji, a wartość to mapa z właściwościami instancji.
+* W `resource "aws_instance" "example"` używamy `for_each = var.ec2_instances` do dynamicznej iteracji przez mapę.
+* `each.key` to aktualny klucz iteracji, a `each.value` to mapa z właściwościami instancji dla danego klucza.
+
+
+include::exercises.adoc[leveloffset=2]

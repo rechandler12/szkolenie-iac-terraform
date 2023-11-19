@@ -1,0 +1,397 @@
+= Zadania
+
+== Instalacja
+
+=== Zadanie 1. Instalacja Terraform
+
+. Zainstaluj i uruchom Terraform
+
+include::install-windows.adoc[leveloffset=3]
+include::install-macos.adoc[leveloffset=3]
+include::install-linux.adoc[leveloffset=3]
+
+=== Zadanie 2. Instalacja shell autocomplete
+
+. Zainstaluj shell autocomplete
+[source,bash]
+----
+terraform -install-autocomplete
+----
+
+[start=2]
+. Zrestartuj konsolę
+
+=== Zadanie 3. Sprawdzenie wersji Terraform
+
+. Sprawdź wersję Terraform komendą
+[source,bash]
+----
+terraform version
+----
+
+=== Zadanie 4. Instalacja Dockera
+
+. Zainstaluj Dockera zgodnie z https://docs.docker.com/engine/install/ubuntu/[instrukcją]
+
+== Podstawowe użycie
+
+=== Zadanie 1. Skonfigurowanie pierwszych zasobów
+
+. Stwórz katalog `terraform-docker`
+. Przejdź do tego katalogu
+. Stwórz plik `main.tf` z zawartością
+[source,hcl]
+----
+terraform {
+  required_providers {
+    docker = {
+      source  = "kreuzwerker/docker"
+      version = "~> 3.0.1"
+    }
+  }
+}
+
+provider "docker" {}
+
+resource "docker_image" "nginx" {
+  name         = "nginx"
+  keep_locally = false
+}
+
+resource "docker_container" "nginx" {
+  image = docker_image.nginx.image_id
+  name  = "tutorial"
+
+  ports {
+    internal = 80
+    external = 8000
+  }
+}
+----
+
+=== Zadanie 2. Zainicjowanie providera
+
+. Zainicjuj providera komendą
+[source,bash]
+----
+terraform init
+----
+. Sprawdź, co się zmieniło w katalogu, poprzeglądaj pliki (z uwzględnieniem ukrytych)
+
+=== Zadanie 3. Walidacja zasobów
+
+. Zwaliduj zasoby komendą
+[source,bash]
+----
+terraform validate
+----
+
+[start=2]
+. Zmień plik, wprowadzając jakąś głupotę
+. Ponownie zwaliduj plik
+. Sprawdź wyniki
+
+=== Zadanie 4. Formatowanie plików
+
+. Sformatuj pliki komendą
+[source,bash]
+----
+terraform fmt
+----
+
+[start=2]
+. Zmień plik, zmieniając formatowanie
+. Ponownie sformatuj pliki
+. Sprawdź wyniki
+
+=== Zadanie 5. Zaplanowanie wdrożenie aplikacji
+
+. Wykonaj
+[source,bash]
+----
+terraform plan
+----
+
+[start=2]
+. Przeanalizuj co zostało wypisane na ekran
+
+=== Zadanie 6. Wdrożenie kontenerów i inspekcja stanu
+
+. Wykonaj
+[source,bash]
+----
+terraform apply
+----
+
+[start=2]
+. Sprawdź, czy nginx odpowiada na porcie 8000
+. Przeanalizuj, jakie pliki zostały utworzone
+. Sprawdź stan komendą
+[source,bash]
+----
+terraform state show docker_container.nginx
+----
+
+[start=5]
+. Przeanalizuj wyniki
+. Zobacz jakimi zasobami zarządza Terraform komendą
+[source,bash]
+----
+terraform state list
+----
+
+=== Zadanie 7. Usunięcie wszystkich zasobów
+
+. Usuń zasoby
+[source,bash]
+----
+terraform destroy
+----
+
+[start=2]
+. Sprawdź, czy zasoby zostały usunięte
+. Sprawdź jak wyglądają obecnie pliki
+
+=== Zadanie 8. Uaktualnienie zasobów
+
+. Ponownie wgraj zasoby (Zadanie 6.)
+. Wyedytuj zasoby w pliku `main.tf`, możesz np. zmienić port z 8000 na 8080
+. Ponownie wgraj zasoby
+. Zobacz jak wygląda output
+. Sprawdź, czy zmiany zostały zastosowane
+
+=== Zadanie 9. Dodanie nowego zasobu
+
+. Dodaj nowy zasób w pliku `main.tf`, możesz np. dodać kolejny kontener (pamiętaj o zmianie nazwy)
+. Wgraj zasoby
+. Zobacz jak wygląda output
+. Sprawdź, czy zmiany zostały zastosowane
+
+=== Zadanie 10. Usunięcie zasobu
+
+. Usuń zasób w pliku `main.tf`
+. Wgraj zasoby (za pomocą apply)
+. Zobacz jak wygląda output
+. Sprawdź, czy zmiany zostały zastosowane
+
+=== Zadanie 11. Dodajmy zmienne
+
+. Dodaj plik `variables.tf`
+. Z zawartością
+[source,hcl]
+----
+variable "container_name" {
+  description = "Value of the name for the Docker container"
+  type        = string
+  default     = "ExampleNginxContainer"
+}
+----
+
+[start=3]
+. Użyj tej zmiennej jako nazwy kontenera (`var.container_name`)
+. Wgraj zmiany podając nazwę zmiennej jako argument `apply`
+
+=== Zadanie 12. Output
+
+. Dodaj plik `outputs.tf`
+. Z zawartością
+[source,hcl]
+----
+output "container_id" {
+  description = "ID of the Docker container"
+  value       = docker_container.nginx.id
+}
+
+output "image_id" {
+  description = "ID of the Docker image"
+  value       = docker_image.nginx.id
+}
+----
+
+[start=3]
+. Wgraj zmiany
+. Podejrzyj output
+[source,bash]
+----
+terraform output
+----
+
+=== Zadanie 13. Pętle
+
+. Skorzystaj z bazowego `main.tf` z zadania 1.
+. Dodaj zmienną, która będzie mapą — nazwa obrazu i nazwa kontenera (key, value)
+. Dodaj do tej zmiennej:
+.. nginx, nginx
+.. httpd, httpd
+. Pamiętaj o usunięciu portów
+. Zmień dodawanie zasobów, żeby obsługiwał tę mapę w pętli
+
+== Trzymajmy to w Git
+
+=== Zadanie 1. Utwórz repozytorium na GitLab
+
+. Stwórz konto na GitLab (jeśli jeszcze nie masz)
+. Stwórz repozytorium, na którym będziesz trzymać kod
+
+=== Zadanie 2. Wrzucenie gitignore
+
+. Wygeneruj plik `.gitignore` na stronie https://www.toptal.com/developers/gitignore[gitignore.io]
+. Wrzuć ten plik do repozytorium
+
+=== Zadanie 3. Wrzucenie projekt Terraform do repozytorium
+
+. Wrzuć swój projekt do repozytorium
+. Ściągnij projekt lokalnie
+. Uruchom to w IDE
+
+== Rozbudowane użycie
+
+=== Zadanie 1. Użycie wielu providerów
+
+. Dodaj providera `random` i skorzystaj z jego możliwości
+. Nadaj losowe nazwy stworzonym kontenerem
+
+=== Zadanie 2. Tworzenie repozytoriów w GitLab
+
+. Stwórz konto na GitLab (jeśli jeszcze nie masz)
+. Przy pomocy providera `gitlab` zarządzaj repozytoriami
+. Stwórz repozytorium `terraform`
+. Stwórz w nim brancha `develop`
+
+=== Zadanie 3. Projekt
+
+. Na podstawie wiedzy z poprzednich zadań stwórz rozbudową infrastrukturę
+. Jeżeli nie masz pomysłu, możesz zrobić coś takiego:
+.. Stwórz repozytorium kodu w GitLab, nazwę, którego zawrzesz w zmiennych
+.. Stwórz sieć w Docker
+.. Stwórz kontener z MariaDB albo MySQL w Docker, pamiętaj, że baza danych potrzebuje wolumenu
+.. Stwórz kontener z Wordpress, który będzie miał randomową nazwę
+.. Zwróć nazwę kontenera z Wordpress jako output
+
+== AWS
+
+=== Zadanie 1. Stworzenie darmowe konto na AWS
+
+. Załóż darmowe konto na AWS
+
+=== Zadanie 2. Wygenerowanie ACCESS_KEY i SECRET_ACCESS_KEY
+
+. Wejdź w ustawienia konta
+. Wygeneruj ACCESS_KEY i SECRET_ACCESS_KEY
+. Zapisz te wartości
+
+=== Zadanie 3. Stworzenie pierwszego zasobu na AWS
+
+. Skonfiguruj providera do AWSa
+. Pamiętaj o ustawieniu regionu
+. Stwórz pierwszy zasób
+[source,hcl]
+----
+resource "aws_vpc" "example" {
+  cidr_block = "10.0.0.0/16"
+}
+----
+
+=== Zadanie 4. Tworzenie instancji EC2
+
+. Stwórz instancję EC2 typu t2.micro
+. Nadaj jej tagi
+
+=== Zadanie 5. Użycie data source do wyszukania AMI
+
+. Stwórz data source do wyszukania AMI
+.. Właściciel: Amazon
+.. Nazwa zaczynająca się na: al2023-ami-2023
+.. Typ wirtualizacji: hvm
+. Użyj data source do wyszukania obrazu do instancji EC2
+
+=== Zadanie 6. Tworzenie security groups
+
+. Stwórz security group (i obiekty powiązane)
+. Security group ma dopuszczać cały ruch wychodzący i dopuszczać ruch przychodzący z dowolnego IP na porcie 22 (SSH)
+. Dołącz ją do instancji EC2
+
+=== Zadanie 7. Tworzenie kluczy logowania
+
+. Stwórz klucz ssh
+. Dodaj go do instancji EC2
+
+=== Zadanie 8. Projekt
+
+. Utwórz instancję EC2, która
+.. Będzie miała publiczne IP
+.. Będzie dopuszczać ruch po SSH
+.. Będzie miała skonfigurowany dostęp po kluczu do SSH
+. Wykonaj na niej komendę za pomocą SSH, np. `echo 123`
+
+=== Zadanie 9. Tworzenie bucketu w S3
+
+. Utwórz bucket w S3
+
+=== Zadanie 10. Włączenie wersjonowania w bucket
+
+. Włącz wersjonowanie we wcześniej stworzonym bucket
+
+=== Zadanie 11. Użycie S3 jako backend
+
+. Użyj wcześniej stworzonego bucketu jako backend dla Terraforma
+
+=== Zadanie 12. Współdzielenie stanu z zespołem
+
+. Dobierzcie się w pary
+. Zróbcie wspólne repozytorium na GitLabie
+. Wrzućcie tam pliki Terraforma (jednej z osób)
+. Pamiętajcie o zawarciu `gitignore`
+. Skonfigurujcie S3 jako backend
+. Spróbujcie współdzielić pracę
+. Jakie problemy i zagrożenia widzicie?
+
+== Terraform Cloud
+
+=== Zadanie 1. Tworzenie konta
+
+. Stwórz konto na Terraform Cloud
+
+=== Zadanie 2. Konfiguracja Terraform Cloud
+
+. Skonfiguruj Terraform Cloud zgodnie z tutorialem na stronie
+. Pobierz przykładowy projekt
+. Uruchom go
+
+=== Zadanie 3. Konfiguracja nowego Workspace
+
+. Stwórz nowy Workspace oparty o GitLaba
+. W repozytorium skonfiguruj zasoby do AWS z poprzednich zadań
+. Spróbuj doprowadzić pipeline do działania
+. Stwórz instancję EC2 i Bucket w S3
+
+=== Zadanie 4. Praca wspólna
+
+. Dobierzcie się w 5 osobowe zespoły
+. Spróbujcie popracować na Terraform Cloud wspólnie
+. Zwróćcie szczególną uwagę na lockowanie stanu
+
+== Moduły
+
+=== Zadanie 1. Tworzenie nowego modułu
+
+. Stwórz nowy moduł
+. Użyj tworzenie EC2 (z Zadania 8. Projekt, z sekcji AWS) do stworzenia modułu
+
+=== Zadanie 2. Zmienne wejściowe
+
+. W module z poprzedniego zadania stwórz zmienną wejściową, która będzie użyta jako nazwa Bucketa
+
+=== Zadanie 3. Wyjście
+
+. W module z poprzedniego zadania zwróć publiczne IP z modułu jako output
+
+=== Zadanie 4. Wydzielanie modułów — Projekt
+
+. Wydziel 3 moduły
+.. Tworzący Wordpressa
+.. Tworzący EC2
+.. Tworzący Bucket w S3
+. Skonfiguruj odpowiednio providery
+. Zadeklaruj odpowiednio zmienne wejściowe
+. Zadeklaruj odpowiednio wyjście
